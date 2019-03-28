@@ -1,6 +1,7 @@
 #ifndef QUICKSORT_H
 #define QUICKSORT_H
 
+
 template <class T>
 void quicksort(T* tablica, int lewy, int prawy)
 {
