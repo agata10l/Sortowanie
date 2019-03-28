@@ -2,7 +2,6 @@
 #define INTROSPECTIVE_H
 #include <cmath>
 
-
 template <class T>
 void zamien_miejscami(T* tablica, int element1, int element2)
 {
