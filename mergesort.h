@@ -1,6 +1,7 @@
 #ifndef MERGESORT_H
 #define MERGESORT_H
 
+
 template <class T>
 void merge(T* tablica, int lewy, int srodek, int prawy)
 {
