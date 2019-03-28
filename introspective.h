@@ -1,9 +1,6 @@
 #ifndef INTROSPECTIVE_H
 #define INTROSPECTIVE_H
-
 #include <cmath>
-
-         
 
 
 template <class T>
@@ -14,8 +11,9 @@ void zamien_miejscami(T* tablica, int element1, int element2)
 	tablica[element1] = tablica[element2];
 	tablica[element2] = pomocnicze;
 }
+/*Szablon budowy kopca dla algorytmu Heapsort*/
 template <class T>
-void sterta(T* tablica, int rozmiar, int i)
+void kopiec(T* tablica, int rozmiar, int i)	//i-rodzic
 {
 	int j;
 
@@ -23,14 +21,14 @@ void sterta(T* tablica, int rozmiar, int i)
 	{
 		j = i * 2;
 
-		if (j + 1 <= rozmiar && tablica[j] < tablica[j + 1])
+		if (j + 1 <= rozmiar && tablica[j] < tablica[j + 1]) 
 		{
 			++j;
 		}
 
-		if (tablica[i] < tablica[j])
+		if (tablica[i] < tablica[j])	//jesli rodzic < od dziecka nastêpuje zamiana
 		{
-			zamien_miejscami(tablica, i, j);
+			zamien_miejscami(tablica, i, j); 
 		}
 		else
 		{
@@ -40,20 +38,22 @@ void sterta(T* tablica, int rozmiar, int i)
 		i = j;
 	}
 }
+/*Sortowanie przez kopcowanie*/
 template <class T>
 void heapsort(T* tablica, int rozmiar)
 {
-	for (int i = rozmiar / 2; i > 0; --i)
+	for (int i = rozmiar / 2; i > 0; --i)	//tworzenie kopca
 	{
-		sterta(tablica - 1, rozmiar, i);
+		kopiec(tablica - 1, rozmiar, i);
 	}
 
 	for (int i = rozmiar - 1; i > 0; --i)
 	{
-		zamien_miejscami(tablica, 0, i);
-		sterta(tablica - 1, i, 1);
+		zamien_miejscami(tablica, 0, i);	//przeniesienie rodzica na koniec kopca
+		kopiec(tablica - 1, i, 1);
 	}
 }
+/*Kod "podziel" jest taki sam jak dla sortowania szybkiego*/
 template <class T>
 int podziel(T* tablica, int lewy, int prawy)
 {
@@ -98,6 +98,8 @@ int podziel(T* tablica, int lewy, int prawy)
 
 	return i;
 }
+/*Okreœla maks. g³êbokoœæ wywo³añ rekurencyjnych,
+ze wzglêdu na g³êbokoœæ wywo³ywany jest odpowiedni algorytm*/
 template <class T>
 void introsort(T* tablica, int rozmiar, int glebokosc)
 {
@@ -107,31 +109,32 @@ void introsort(T* tablica, int rozmiar, int glebokosc)
 		return;
 	}
 
-	int i = podziel(tablica, 0, rozmiar);
+	int i = podziel(tablica, 0, rozmiar);	//9 -ogólnie przzyjêta min. wartoœæ tablicy
 
 	if (i > 9)
 	{
-		introsort(tablica, i, glebokosc - 1);
+		introsort(tablica, i, glebokosc - 1);	//maks. g³êbokoœæ rekurencyjnych wywo³añ kolejengo poziomu bêdzie o 1 mniejsza
 	}
 	if (rozmiar - i - 1 > 9)
 	{
 		introsort(tablica + i + 1, rozmiar - i - 1, glebokosc - 1);
 	}
 }
+/*Sortowanie przez wstawianie*/
 template <class T>
 void insertsort(T *tablica, int rozmiar)
 {
 	for (int i = 1; i < rozmiar; ++i)
 	{
 		int j = i - 1;
-		T pomocnicze = tablica[i];
+		T pomocnicze = tablica[i]; //zapamiêtywana wartoœæ elemntu wiêkszego o 1 od iteracji
 
-		while (j >= 0 && tablica[j] > pomocnicze)
+		while (j >= 0 && tablica[j] > pomocnicze) //dopóki nie dojdzie do pocz¹tku tablicy i obecny element mniejszy od poprzedzaj¹cego
 		{
-			tablica[j + 1] = tablica[j--];
+			tablica[j + 1] = tablica[j--]; //do obecnego nadpisujemy poprzedni¹ wartoœæ
 		}
 
-		tablica[j + 1] = pomocnicze;
+		tablica[j + 1] = pomocnicze; //do poprzedniego nadpisujemy obecn¹ wartoœæ
 	}
 }
 template <class T>
